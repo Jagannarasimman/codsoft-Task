@@ -1,0 +1,63 @@
+import tkinter as tk
+from tkinter import messagebox, ttk
+from datetime import datetime
+
+class Task:
+    def __init__(self, name, priority, due_date):
+        self.name = name
+        self.priority = priority
+        self.due_date = due_date
+
+class TaskManagerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Task Manager")
+        self.root.configure(bg="brown")  # Set background color to blue
+
+        # Create fonts
+        title_font = ("Helvetica", 16, "bold")
+        task_font = ("Arial", 12)
+
+        # Create widgets
+        self.task_entry = tk.Entry(root, font=task_font, width=40)
+        self.add_button = tk.Button(root, text="Add A New Task", command=self.add_task, font=task_font)
+        self.remove_button = tk.Button(root, text="Remove  Task", command=self.remove_task, font=task_font)
+        self.tasks_listbox = tk.Listbox(root, font=task_font, width=80, height=30)
+
+        # Pack widgets
+        self.task_entry.pack(pady=10)
+        self.add_button.pack()
+        self.remove_button.pack()
+        self.tasks_listbox.pack()
+
+        # Initialize tasks list
+        self.tasks = []
+
+    def add_task(self):
+        task_name = self.task_entry.get()
+        if task_name:
+            priority = "High"  # You can add a dropdown menu to select priority
+            due_date = datetime.now().strftime("%Y-%m-%d")  # Default due date is today
+            new_task = Task(task_name, priority, due_date)
+            self.tasks.append(new_task)
+            self.update_listbox()
+            self.task_entry.delete(0, tk.END)
+        else:
+            messagebox.showwarning("Warning", "Please enter a task!")
+
+    def remove_task(self):
+        selected_task = self.tasks_listbox.curselection()
+        if selected_task:
+            self.tasks.pop(selected_task[0])
+            self.update_listbox()
+
+    def update_listbox(self):
+        self.tasks_listbox.delete(0, tk.END)
+        for i, task in enumerate(self.tasks, start=1):
+            task_text = f"{i}. {task.name} (Priority: {task.priority}, Due: {task.due_date})"
+            self.tasks_listbox.insert(tk.END, task_text)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TaskManagerApp(root)
+    root.mainloop()
