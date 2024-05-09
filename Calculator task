@@ -1,0 +1,48 @@
+# First, we define the operations the magic box can perform
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+def multiply(x, y):
+    return x * y
+
+def divide(x, y):
+    # We make sure we are not dividing by zero
+    if y == 0:
+        return "Oops! Can't divide by zero."
+    else:
+        return x / y
+
+# Now, we create a function to interact with the user
+def use_magic_box():
+    print("Welcome to the Magic Box Calculator!")
+    print("Select an operation:")
+    print("1. Add (+)")
+    print("2. Subtract (-)")
+    print("3. Multiply (*)")
+    print("4. Divide (/)")
+
+    # We ask the user to choose an operation
+    operation = input("Enter the number of the operation you want to perform (1/2/3/4): ")
+
+    # We make sure the user's choice is valid
+    if operation in ('1', '2', '3', '4'):
+        num1 = float(input("Enter the first number: "))
+        num2 = float(input("Enter the second number: "))
+
+        # We perform the operation based on the user's choice
+        if operation == '1':
+            print("The result is: ", add(num1, num2))
+        elif operation == '2':
+            print("The result is: ", subtract(num1, num2))
+        elif operation == '3':
+            print("The result is: ", multiply(num1, num2))
+        elif operation == '4':
+            print("The result is: ", divide(num1, num2))
+    else:
+        print("Invalid operation selected. Please restart the Magic Box.")
+
+# Finally, we start the magic box
+use_magic_box()
